@@ -3,7 +3,7 @@
 # JoinGonka Gateway: streaming chat completion over curl.
 #
 # Prerequisites:
-#   export JOINGONKA_API_KEY="jgk-..."   # get one at https://gate.joingonka.ai
+#   export JOINGONKA_API_KEY="jg-..."   # get one at https://gate.joingonka.ai
 #
 # Run:
 #   bash streaming-curl.sh

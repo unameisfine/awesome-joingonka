@@ -3,7 +3,7 @@ JoinGonka Gateway: OpenAI-compatible chat completion in Python.
 
 Prerequisites:
     pip install openai
-    export JOINGONKA_API_KEY="jgk-..."   # get one at https://gate.joingonka.ai
+    export JOINGONKA_API_KEY="jg-..."   # get one at https://gate.joingonka.ai
 
 Run:
     python openai-python.py

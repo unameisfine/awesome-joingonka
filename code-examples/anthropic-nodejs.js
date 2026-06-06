@@ -3,7 +3,7 @@
  *
  * Prerequisites:
  *   npm install @anthropic-ai/sdk
- *   export JOINGONKA_API_KEY="jgk-..."   # get one at https://gate.joingonka.ai
+ *   export JOINGONKA_API_KEY="jg-..."   # get one at https://gate.joingonka.ai
  *
  * Run:
  *   node anthropic-nodejs.js

@@ -2,7 +2,7 @@
 
 > Curated list of tools, apps, and integrations built with [JoinGonka Gateway](https://gate.joingonka.ai), an OpenAI and Anthropic compatible API gateway for the [Gonka Network](https://gonka.ai) decentralized AI inference.
 
-JoinGonka Gateway lets you use Gonka Network, a decentralized Proof of Useful Work network running Qwen3-235B on 4,000+ GPUs, through standard OpenAI and Anthropic APIs. It bills in GNK or USDT at roughly 100x less than centralized providers, with native streaming, native tool calling, and plugins for response healing, privacy sanitization, and PDF parsing. Signup comes with 10M free tokens.
+JoinGonka Gateway lets you use Gonka Network, a decentralized Proof of Useful Work network running Qwen3-235B, Kimi K2.6, and MiniMax M2.7 on 4,000+ GPUs, through standard OpenAI and Anthropic APIs. It bills in GNK or USDT at roughly 100x less than centralized providers, with native streaming, native tool calling, and plugins for response healing, privacy sanitization, and PDF parsing. Signup comes with 10M free tokens.
 
 ## Contents
 
@@ -18,6 +18,8 @@ JoinGonka Gateway lets you use Gonka Network, a decentralized Proof of Useful Wo
 
 ## Quickstart
 
+Three models are live (June 2026): `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` (default), `moonshotai/Kimi-K2.6`, and `MiniMaxAI/MiniMax-M2.7`. The OpenAI-compatible base URL is `https://gate.joingonka.ai/v1`; the Anthropic-compatible base URL is the domain root `https://gate.joingonka.ai` (Messages API at `/v1/messages`).
+
 Python with the OpenAI SDK:
 
 ```python
@@ -25,7 +27,7 @@ from openai import OpenAI
 
 client = OpenAI(
     base_url="https://gate.joingonka.ai/v1",
-    api_key="jgk-..."  # get one at https://gate.joingonka.ai
+    api_key="jg-..."  # get one at https://gate.joingonka.ai
 )
 
 response = client.chat.completions.create(
@@ -42,7 +44,7 @@ import Anthropic from "@anthropic-ai/sdk";
 
 const client = new Anthropic({
   baseURL: "https://gate.joingonka.ai",
-  apiKey: "jgk-..."
+  apiKey: "jg-..."
 });
 
 const message = await client.messages.create({
@@ -58,7 +60,7 @@ Shell with curl and streaming:
 ```bash
 curl https://gate.joingonka.ai/v1/chat/completions \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer jgk-..." \
+  -H "Authorization: Bearer jg-..." \
   -d '{
     "model": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
     "messages": [{"role": "user", "content": "Hello, Gonka"}],
@@ -83,6 +85,7 @@ The OpenAI-compatible endpoint works with any SDK that supports a custom base UR
 - [instructor](https://github.com/jxnl/instructor) - Structured outputs via Pydantic on top of the OpenAI SDK.
 - [litellm](https://github.com/BerriAI/litellm) - Unified LLM gateway that speaks OpenAI to 100+ providers.
 - [OpenAI Python SDK](https://github.com/openai/openai-python) - Official OpenAI Python client library.
+- [PydanticAI](https://ai.pydantic.dev) - Agent framework from the Pydantic team, set an OpenAI-compatible model with a custom base URL.
 
 ### TypeScript and JavaScript
 
@@ -90,6 +93,7 @@ The OpenAI-compatible endpoint works with any SDK that supports a custom base UR
 - [anthropic-sdk-typescript](https://github.com/anthropics/anthropic-sdk-typescript) - Official Anthropic SDK with baseURL override.
 - [langchainjs](https://github.com/langchain-ai/langchainjs) - LangChain.js with ChatOpenAI and configured basePath.
 - [openai-node](https://github.com/openai/openai-node) - Official OpenAI Node.js SDK.
+- [TanStack AI](https://tanstack.com/ai/latest) - Open-source TypeScript AI SDK with a unified, provider-agnostic interface that accepts a custom base URL.
 
 ### Other Languages
 
@@ -102,12 +106,15 @@ The OpenAI-compatible endpoint works with any SDK that supports a custom base UR
 
 Any coding agent that supports a custom base URL can point at JoinGonka.
 
-- [Aider](https://aider.chat) - Terminal pair programmer with Git integration.
-- [Claude Code](https://docs.claude.com/en/docs/claude-code) - Official Anthropic CLI, wired up via @joingonka/claude-code.
-- [Cline](https://github.com/cline/cline) - Autonomous VS Code agent with OpenAI-compatible provider.
-- [Continue](https://continue.dev) - VS Code and JetBrains AI assistant with OpenAI-compatible model config.
-- [Cursor](https://cursor.com) - AI-first IDE with custom OpenAI model in settings.
-- [OpenCode](https://github.com/opencode-ai/opencode) - Terminal coding agent with OpenAI-compatible provider.
+- [Aider](https://aider.chat) - Terminal pair programmer with Git integration. Guide: https://joingonka.ai/en/knowledge/aider
+- [Claude Code](https://docs.claude.com/en/docs/claude-code) - Official Anthropic CLI, wired up via @joingonka/claude-code. Guide: https://joingonka.ai/en/knowledge/claude-code
+- [Cline](https://github.com/cline/cline) - Autonomous VS Code agent with OpenAI-compatible provider. Guide: https://joingonka.ai/en/knowledge/cline
+- [Continue](https://continue.dev) - VS Code and JetBrains AI assistant with OpenAI-compatible model config. Guide: https://joingonka.ai/en/knowledge/continue-dev
+- [Cursor](https://cursor.com) - AI-first IDE with custom OpenAI model in settings. Guide: https://joingonka.ai/en/knowledge/cursor
+- [Hermes](https://hermes-agent.nousresearch.com) - Open-source personal and coding agent by Nous Research that learns your projects and builds its own skills.
+- [Kilo Code](https://kilocode.ai) - Open-source AI coding agent for VS Code and JetBrains, bring-your-own-key with a custom base URL.
+- [OpenClaw](https://openclaw.ai) - Open-source cross-platform personal and coding agent that runs on any OpenAI-compatible endpoint. Guide: https://joingonka.ai/en/knowledge/openclaw
+- [OpenCode](https://github.com/opencode-ai/opencode) - Terminal coding agent with OpenAI-compatible provider. Guide: https://joingonka.ai/en/knowledge/opencode
 - [Roo Code](https://github.com/RooVetGit/Roo-Cline) - Cline fork for VS Code with OpenAI-compatible provider.
 
 ## Chat UIs
@@ -115,27 +122,24 @@ Any coding agent that supports a custom base URL can point at JoinGonka.
 Self-hosted chat interfaces that work with JoinGonka.
 
 - [AnythingLLM](https://anythingllm.com) - Desktop and server chat with built-in RAG and OpenAI-compatible provider.
-- [LibreChat](https://librechat.ai) - Multi-model chat UI with custom OpenAI endpoint configuration.
-- [Open WebUI](https://github.com/open-webui/open-webui) - Self-hosted chat clone, point OPENAI_API_BASE_URL at JoinGonka.
+- [LibreChat](https://librechat.ai) - Multi-model chat UI with custom OpenAI endpoint configuration. Guide: https://joingonka.ai/en/knowledge/librechat
+- [Open WebUI](https://github.com/open-webui/open-webui) - Self-hosted chat clone, point OPENAI_API_BASE_URL at JoinGonka. Guide: https://joingonka.ai/en/knowledge/open-webui
 
 ## Automation and Low-code
 
-- [LangChain](https://github.com/langchain-ai/langchain) - Python chain and agent framework with ChatOpenAI and base URL override.
+- [LangChain](https://github.com/langchain-ai/langchain) - Python chain and agent framework with ChatOpenAI and base URL override. Guide: https://joingonka.ai/en/knowledge/langchain
 - [LlamaIndex](https://github.com/run-llama/llama_index) - RAG framework with OpenAILike LLM class.
 - [Make](https://make.com) - Scenario builder with HTTP module and Bearer auth.
-- [n8n](https://n8n.io) - Workflow automation via community node or HTTP Request node.
+- [n8n](https://n8n.io) - Workflow automation via community node or HTTP Request node. Guide: https://joingonka.ai/en/knowledge/n8n
 - [Zapier](https://zapier.com) - Automation platform with OpenAI app and custom endpoint.
 
 ## Pricing Comparison
 
-Qwen3-235B and equivalent flagship inference pricing, April 2026.
+Qwen3-235B and equivalent flagship inference pricing, as of June 2026.
 
 | Provider          | Input/1M | Output/1M | Deposit fee      | Payment     |
 | ----------------- | -------- | --------- | ---------------- | ----------- |
 | JoinGonka Gateway | $0.0005  | $0.0005   | 0% GNK, 5% USDT  | GNK, USDT   |
-| GonkaGate         | $0.0007  | $0.0007   | 5%               | USD prepaid |
-| proxy.gonka.gg    | $0.0012  | $0.0012   | 0%               | USD         |
-| Mingles           | $0.0026  | $0.0026   | 0%               | GNK wallet  |
 | DeepInfra         | $0.071   | $0.071    | 0%               | USD         |
 | Novita            | $0.09    | $0.09     | 0%               | USD         |
 | Together AI       | $0.20    | $0.20     | 0%               | USD         |
@@ -143,7 +147,9 @@ Qwen3-235B and equivalent flagship inference pricing, April 2026.
 | Claude Opus       | $15      | $75       | 0%               | USD         |
 | GPT-5.4           | $2.50    | $15       | 0%               | USD         |
 
-Prices are JoinGonka-observed averages and vary with Gonka Network dynamics. Centralized provider prices are their public list prices for the same Qwen3-235B model, except the last two rows which list flagship closed models for reference.
+Compared with centralized providers, Gonka-based inference remains dramatically cheaper. Within the Gonka ecosystem the pricing landscape has tightened: as of June 2026, other gateways such as OpenGNK (proxy.gonka.gg) and GonkaGate price Qwen3-235B at roughly the same level as JoinGonka, so pick based on payment method, deposit fees, model coverage, and reliability rather than on raw per-token price alone.
+
+JoinGonka prices are observed averages and vary with Gonka Network dynamics. Centralized provider prices are their public list prices for the same Qwen3-235B model, except the last two rows which list flagship closed models for reference.
 
 ## Community Projects
 
@@ -153,6 +159,8 @@ Projects built with JoinGonka Gateway by the community.
 
 ## Resources
 
+- [JoinGonka Gateway](https://gate.joingonka.ai) - Dashboard and API. Sign up, manage keys, top up GNK or USDT, and view usage.
+- [JoinGonka live status](https://gate.joingonka.ai/status) - Real-time gateway and model availability.
 - [JoinGonka documentation](https://joingonka.ai/knowledge) - Integration guides, tokenomics articles, mining walkthroughs.
 - [Gonka Explorer](https://gonka.gg) - On-chain explorer for Gonka Network blocks, transactions, and participants.
 - [Gonka whitepaper](https://gonka.ai/whitepaper.pdf) - Protocol design and Proof of Useful Work details.

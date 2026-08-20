@@ -22,7 +22,7 @@ client = OpenAI(
 
 # Model id is the canonical Gonka Network id. JoinGonka proxies it untouched
 # so that routing, billing and auditing stay consistent with the upstream network.
-MODEL = "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8"
+MODEL = "MiniMaxAI/MiniMax-M2.7"
 
 
 def chat_once() -> None:

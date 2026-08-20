@@ -2,7 +2,7 @@
 
 > Curated list of tools, apps, and integrations built with [JoinGonka Gateway](https://gate.joingonka.ai), an OpenAI and Anthropic compatible API gateway for the [Gonka Network](https://gonka.ai) decentralized AI inference.
 
-JoinGonka Gateway lets you use Gonka Network, a decentralized Proof of Useful Work network running Qwen3-235B, Kimi K2.6, and MiniMax M2.7 on 4,000+ GPUs, through standard OpenAI- and Anthropic-compatible APIs. Because inference runs on the network's own GPUs instead of a centralized provider, it is one of the cheapest ways to call flagship open models from code: billing is in GNK or USDT at roughly 100x less than centralized providers, with native streaming, native tool calling, and plugins for response healing, privacy sanitization, and PDF parsing. Signup includes free credits — enough for millions of tokens of testing.
+JoinGonka Gateway lets you use Gonka Network, a decentralized Proof of Useful Work network running Kimi K2.6, MiniMax M2.7, and DeepSeek V4 Flash on 4,000+ GPUs, through standard OpenAI- and Anthropic-compatible APIs. Because inference runs on the network's own GPUs instead of a centralized provider, it is one of the cheapest ways to call flagship open models from code: billing is in GNK or USDT at roughly 100x less than centralized providers, with native streaming, native tool calling, and plugins for response healing, privacy sanitization, and PDF parsing. Signup includes free credits — enough for millions of tokens of testing.
 
 ## Contents
 
@@ -18,7 +18,7 @@ JoinGonka Gateway lets you use Gonka Network, a decentralized Proof of Useful Wo
 
 ## Quickstart
 
-Three models are live (June 2026): `Qwen/Qwen3-235B-A22B-Instruct-2507-FP8` (default), `moonshotai/Kimi-K2.6`, and `MiniMaxAI/MiniMax-M2.7`. The OpenAI-compatible base URL is `https://gate.joingonka.ai/v1`; the Anthropic-compatible base URL is the domain root `https://gate.joingonka.ai` (Messages API at `/v1/messages`).
+Three models are live (August 2026): `MiniMaxAI/MiniMax-M2.7` (default), `moonshotai/Kimi-K2.6`, and `deepseek-ai/DeepSeek-V4-Flash-0731` (380K context, output up to 32768). The live list is always `GET /v1/models` — the network's model set changes. The OpenAI-compatible base URL is `https://gate.joingonka.ai/v1`; the Anthropic-compatible base URL is the domain root `https://gate.joingonka.ai` (Messages API at `/v1/messages`).
 
 The fastest path for a coding agent is the one-command installer, which writes the config and verifies the connection with a live request:
 
@@ -26,7 +26,7 @@ The fastest path for a coding agent is the one-command installer, which writes t
 npx @joingonka/setup
 ```
 
-It configures Claude Code, OpenClaw, Cline, opencode, Aider, Kilo Code, Roo Code, or Continue. To call the API directly, point any OpenAI- or Anthropic-compatible SDK at the base URL above.
+It configures 15 tools: Claude Code, OpenClaw, Cursor, Cline, opencode, Aider, Kilo Code, Roo Code, Continue, Hermes, Pi, Zed, ZCode, JetBrains AI Assistant, and GitHub Copilot BYOK. Add `--tool <name>` to skip the menu. To call the API directly, point any OpenAI- or Anthropic-compatible SDK at the base URL above.
 
 Python with the OpenAI SDK:
 
@@ -39,7 +39,7 @@ client = OpenAI(
 )
 
 response = client.chat.completions.create(
-    model="Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+    model="MiniMaxAI/MiniMax-M2.7",
     messages=[{"role": "user", "content": "Hello, Gonka"}]
 )
 print(response.choices[0].message.content)
@@ -56,7 +56,7 @@ const client = new Anthropic({
 });
 
 const message = await client.messages.create({
-  model: "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+  model: "MiniMaxAI/MiniMax-M2.7",
   max_tokens: 1024,
   messages: [{ role: "user", content: "Hello, Gonka" }]
 });
@@ -70,7 +70,7 @@ curl https://gate.joingonka.ai/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer jg-..." \
   -d '{
-    "model": "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8",
+    "model": "MiniMaxAI/MiniMax-M2.7",
     "messages": [{"role": "user", "content": "Hello, Gonka"}],
     "stream": true
   }'
@@ -80,9 +80,9 @@ Complete runnable examples live in [code-examples](./code-examples/).
 
 ## Official Packages
 
-- [@joingonka/setup](https://www.npmjs.com/package/@joingonka/setup) - Universal one-command installer (`npx @joingonka/setup`) that points eight agentic AI tools — Claude Code, OpenClaw, Cline, opencode, Aider, Kilo Code, Roo Code, and Continue — at JoinGonka and verifies the connection with a live request.
+- [@joingonka/setup](https://www.npmjs.com/package/@joingonka/setup) - Universal one-command installer (`npx @joingonka/setup`) that points 15 agentic AI tools at JoinGonka and verifies the connection with a live request. Seven get their config file written and merged in place (Claude Code, OpenClaw, opencode, Kilo Code, Pi, Zed, Hermes); the GUI-only ones (Cursor, Cline, Roo Code, Continue, ZCode, JetBrains, Copilot BYOK) get the exact values to paste.
 - [@joingonka/claude-code](https://www.npmjs.com/package/@joingonka/claude-code) - Single-tool installer for Claude Code via the Anthropic-compatible endpoint; superseded by @joingonka/setup for most users.
-- [@joingonka/n8n-nodes-joingonka](https://www.npmjs.com/package/@joingonka/n8n-nodes-joingonka) - n8n community node for drag-and-drop Qwen3 calls with streaming support.
+- [@joingonka/n8n-nodes-joingonka](https://www.npmjs.com/package/@joingonka/n8n-nodes-joingonka) - n8n community node for drag-and-drop Gonka model calls with streaming support.
 
 ## SDKs and Frameworks
 
@@ -113,18 +113,23 @@ The OpenAI-compatible endpoint works with any SDK that supports a custom base UR
 
 ## Coding Agents
 
-Any coding agent that supports a custom base URL can point at JoinGonka. Eight of the tools below can be configured automatically with `npx @joingonka/setup` (see [Official Packages](#official-packages)).
+Any coding agent that supports a custom base URL can point at JoinGonka. Every tool below is covered by `npx @joingonka/setup` (see [Official Packages](#official-packages)) — either by writing its config or by printing the values its UI asks for.
 
 - [Aider](https://aider.chat) - Terminal pair programmer with Git integration. Guide: https://joingonka.ai/en/knowledge/aider
 - [Claude Code](https://docs.claude.com/en/docs/claude-code) - Official Anthropic CLI, wired up via @joingonka/claude-code. Guide: https://joingonka.ai/en/knowledge/claude-code
 - [Cline](https://github.com/cline/cline) - Autonomous VS Code agent with OpenAI-compatible provider. Guide: https://joingonka.ai/en/knowledge/cline
 - [Continue](https://continue.dev) - VS Code and JetBrains AI assistant with OpenAI-compatible model config. Guide: https://joingonka.ai/en/knowledge/continue-dev
-- [Cursor](https://cursor.com) - AI-first IDE with custom OpenAI model in settings. Guide: https://joingonka.ai/en/knowledge/cursor
-- [Hermes](https://hermes-agent.nousresearch.com) - Open-source personal and coding agent by Nous Research that learns your projects and builds its own skills.
-- [Kilo Code](https://kilocode.ai) - Open-source AI coding agent for VS Code and JetBrains, bring-your-own-key with a custom base URL.
+- [Cursor](https://cursor.com) - AI-first IDE with custom OpenAI model in settings (BYOK needs a Pro plan). Guide: https://joingonka.ai/en/knowledge/cursor
+- [GitHub Copilot BYOK](https://docs.github.com/copilot) - Bring your own key in VS Code and JetBrains; BYOK calls bill at your provider and skip the premium quota. Guide: https://joingonka.ai/en/knowledge/copilot-byok
+- [Hermes](https://hermes-agent.nousresearch.com) - Open-source personal and coding agent by Nous Research that learns your projects and builds its own skills. Guide: https://joingonka.ai/en/knowledge/hermes
+- [JetBrains AI Assistant](https://www.jetbrains.com/ai/) - Native assistant in IntelliJ, PyCharm, WebStorm and friends; accepts OpenAI-compatible providers since 2026.1. Guide: https://joingonka.ai/en/knowledge/jetbrains
+- [Kilo Code](https://kilocode.ai) - Open-source AI coding agent for VS Code and JetBrains, bring-your-own-key with a custom base URL. Guide: https://joingonka.ai/en/knowledge/kilo-code
 - [OpenClaw](https://openclaw.ai) - Open-source cross-platform personal and coding agent that runs on any OpenAI-compatible endpoint. Guide: https://joingonka.ai/en/knowledge/openclaw
 - [OpenCode](https://github.com/opencode-ai/opencode) - Terminal coding agent with OpenAI-compatible provider. Guide: https://joingonka.ai/en/knowledge/opencode
-- [Roo Code](https://github.com/RooVetGit/Roo-Cline) - Cline fork for VS Code with OpenAI-compatible provider.
+- [Pi](https://pi.dev) - Minimalist terminal coding agent; providers are declared in `~/.pi/agent/models.json`. Guide: https://joingonka.ai/en/knowledge/pi
+- [Roo Code](https://github.com/RooVetGit/Roo-Cline) - Cline fork for VS Code with OpenAI-compatible provider. Guide: https://joingonka.ai/en/knowledge/roo-code
+- [Zed](https://zed.dev) - Fast open-source editor whose Agent Panel takes any `openai_compatible` provider. Guide: https://joingonka.ai/en/knowledge/zed
+- [ZCode](https://z.ai) - Agentic development environment by Z.ai with BYOK for any OpenAI- or Anthropic-compatible service. Guide: https://joingonka.ai/en/knowledge/zcode
 
 ## Chat UIs
 
@@ -144,11 +149,11 @@ Self-hosted chat interfaces that work with JoinGonka.
 
 ## Pricing Comparison
 
-Qwen3-235B and equivalent flagship inference pricing, as of June 2026.
+Flagship open-model inference pricing, measured 20 August 2026. JoinGonka bills one flat rate for every network model; the live figure is always `GET /api/pricing`, since it tracks the GNK exchange rate.
 
 | Provider          | Input/1M | Output/1M | Deposit fee      | Payment     |
 | ----------------- | -------- | --------- | ---------------- | ----------- |
-| JoinGonka Gateway | $0.0004  | $0.0004   | 0% GNK, 5% USDT  | GNK, USDT   |
+| JoinGonka Gateway | $0.003   | $0.003    | 0% GNK, 2.5-5% USDT | GNK, USDT |
 | DeepInfra         | $0.071   | $0.071    | 0%               | USD         |
 | Novita            | $0.09    | $0.09     | 0%               | USD         |
 | Together AI       | $0.20    | $0.20     | 0%               | USD         |
@@ -156,9 +161,9 @@ Qwen3-235B and equivalent flagship inference pricing, as of June 2026.
 | Claude Opus       | $15      | $75       | 0%               | USD         |
 | GPT-5.4           | $2.50    | $15       | 0%               | USD         |
 
-Compared with centralized providers, Gonka-based inference remains dramatically cheaper. Within the Gonka ecosystem the pricing landscape has tightened: as of June 2026, other gateways such as OpenGNK (proxy.gonka.gg) and GonkaGate price Qwen3-235B at roughly the same level as JoinGonka, so pick based on payment method, deposit fees, model coverage, and reliability rather than on raw per-token price alone.
+Compared with centralized providers, Gonka-based inference remains dramatically cheaper — roughly 20-60x below the cheapest centralized hosts of the same open models. Within the Gonka ecosystem the pricing landscape has tightened: other gateways such as OpenGNK (proxy.gonka.gg) and GonkaGate price network models at roughly the same level, so pick based on payment method, deposit fees, model coverage, and reliability rather than on raw per-token price alone.
 
-JoinGonka prices are observed averages and vary with Gonka Network dynamics. Centralized provider prices are their public list prices for the same Qwen3-235B model, except the last two rows which list flagship closed models for reference.
+JoinGonka prices are observed averages and vary with Gonka Network dynamics and the GNK exchange rate — check `GET /api/pricing` for the current number. Centralized provider prices are their public list prices for comparable open models, except the last two rows which list flagship closed models for reference.
 
 ## Community Projects
 

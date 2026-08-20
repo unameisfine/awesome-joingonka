@@ -22,7 +22,7 @@ const client = new Anthropic({
 });
 
 // Model id is the canonical Gonka Network id.
-const MODEL = "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8";
+const MODEL = "MiniMaxAI/MiniMax-M2.7";
 
 async function chatOnce() {
   const message = await client.messages.create({

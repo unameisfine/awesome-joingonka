@@ -16,7 +16,7 @@ set -euo pipefail
 : "${JOINGONKA_API_KEY:?JOINGONKA_API_KEY is not set}"
 
 GATEWAY_URL="${GATEWAY_URL:-https://gate.joingonka.ai/v1/chat/completions}"
-MODEL="${MODEL:-Qwen/Qwen3-235B-A22B-Instruct-2507-FP8}"
+MODEL="${MODEL:-MiniMaxAI/MiniMax-M2.7}"
 
 # --no-buffer keeps curl from buffering the SSE stream so deltas print live.
 curl --no-buffer --silent --show-error \
